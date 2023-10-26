@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: #333;
+        color: aliceblue;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .card{
+        padding: 10px;
+        margin: 5px;
+        border: 1px solid grey;
+    }
+</style>
+<body>
+    <div id="hostel">
+
+    </div>
+    <script>
+        const URL='http://localhost:8000'
+        const main=document.getElementById("hostel")
+        window.addEventListener("load",()=>{
+            fetch(URL)
+            .then(res => res.json())
+            .then(data => {
+            let output = ''
+             data.forEach(element => {
+                output += `<div class="card"><img src ="${URL}${element.Image}" width="400px"/><h2>${element.name}</h2></div>`
+             })
+            main.innerHTML = output
+            console.log(data)
+        })
+        })
+    </script>
+</body>
+</html>
