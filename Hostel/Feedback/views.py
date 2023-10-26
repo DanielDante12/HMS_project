@@ -2,12 +2,12 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from .models import Hostel, Feedback, Room
+from .models import *
 from .serializer import HostelSerializer, FeedbackSerializer, RoomSerializer
 from rest_framework import status
 
 # obtaining all the hostels 
-@api_view(['GET', 'POST','PUT'])
+@api_view(['GET', 'POST'])
 def hostels(request):
     if request.method == 'GET':
         # Handle the GET request to retrieve all hostels
@@ -75,7 +75,14 @@ def roomInfo(request, pk):
         room = Room.objects.get(id=pk)
     except:
         return Response(status=status.HTTP_400_BAD_REQUEST) 
+    if request.method == 'PATCH':
+        serialized = RoomSerializer(room, data=request.data, partial=True)
+        if serialized.is_valid():
+            serialized.save()
+            return Response(serialized.data, status=status.HTTP_202_ACCEPTED)
+        return Response(serialized.errors, status=status.HTTP_400_BAD_REQUEST)
     serialized = RoomSerializer(room)
     return Response(serialized.data)   
     
+
         
