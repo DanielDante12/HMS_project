@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="rno">
+    <input type="file" name="" class="images" multiple>
+    <button onclick="get()">Send</button>
+    <script>
+        const get=async()=>{
+            const images = document.querySelector(".images").files
+            let formdata = await new FormData()
+            formdata.append("room_number", document.getElementById("rno").value)
+            formdata.append("occupants", "3")
+            formdata.append("hostel", 2)
+            for(let i =0; i<images.length; i++){
+                formdata.append(`image${i}`, images[i])
+            }
+            const response = await fetch('http://localhost:8000/hrooms/2', {
+                method: 'POST',
+                body: formdata
+            })
+            console.log(response.status)
+        }
+    </script>
+</body>
+</html>
