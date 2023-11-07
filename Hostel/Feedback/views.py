@@ -55,7 +55,7 @@ def Feedback(request, pk):
             serialized.save()
             return Response(status=status.HTTP_201_CREATED)
     return Response(serialized.data)
-    
+#returning rooms associated with a given hostel using the hostels unique id
 @api_view(['GET', 'POST'])    
 def hostelRooms(request, pk):
     hostel = Hostel.objects.get(id =pk)
@@ -68,7 +68,7 @@ def hostelRooms(request, pk):
     serialized = RoomSerializer(rooms, many= True)
     return Response(serialized.data)
 
-
+#returning information on specific room
 @api_view(['GET', 'PATCH'])
 def roomInfo(request, pk):
     try:
